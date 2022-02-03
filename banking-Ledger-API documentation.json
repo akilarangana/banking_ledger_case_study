@@ -1,0 +1,590 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "banking Ledger",
+    "version": "1.0"
+  },
+  "host": "localhost:3000",
+  "schemes": [
+    "http"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "paths": {
+    "/user/create": {
+      "post": {
+        "summary": "Create New User",
+        "operationId": "post-user",
+        "responses": {
+          "200": {
+            "description": "User Created",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing Required Information",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "409": {
+            "description": "User name Already Taken",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "description": "Create a new user.",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_name": {
+                  "type": "string"
+                },
+                "address": {
+                  "type": "string"
+                },
+                "telephone_number": {
+                  "type": "string"
+                },
+                "base_currency": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "user_name",
+                "address",
+                "telephone_number",
+                "base_currency"
+              ]
+            },
+            "description": "Post the necessary fields for the API to create a new user.",
+            "x-examples": {
+              "Create User Bob Fellow": {
+                "firstName": "Bob",
+                "lastName": "Fellow",
+                "email": "bob.fellow@gmail.com",
+                "dateOfBirth": "1996-08-24"
+              }
+            }
+          }
+        ]
+      },
+      "parameters": []
+    },
+    "/user/view_accounts": {
+      "parameters": [],
+      "get": {
+        "summary": "",
+        "operationId": "get-users-view_accounts",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "account_id": {
+                    "type": "string"
+                  },
+                  "bank_id": {
+                    "type": "string"
+                  },
+                  "account_type": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": "End point to view user user's accounts",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "user_id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/accounts/create": {
+      "parameters": [],
+      "post": {
+        "summary": "",
+        "operationId": "post-accounts-create",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "account_id": {
+                  "type": "string"
+                },
+                "bank_id": {
+                  "type": "string"
+                },
+                "user_id": {
+                  "type": "string"
+                },
+                "account_type": {
+                  "type": "integer"
+                }
+              }
+            },
+            "examples": {}
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "description": "endpoint to create accounts",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "bank_id": {
+                  "type": "string"
+                },
+                "user_id": {
+                  "type": "string"
+                },
+                "account_type": {
+                  "type": "integer"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/accounts/update": {
+      "parameters": [],
+      "put": {
+        "summary": "",
+        "operationId": "put-accounts-update",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {}
+            }
+          }
+        },
+        "description": "update account type",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "account_id": {
+                  "type": "string"
+                },
+                "account_type": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/accounts/delete": {
+      "delete": {
+        "summary": "",
+        "operationId": "delete-accounts-delete",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "endpoint for delete accounts",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "account_id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/accounts/view_balance": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "account_balance": {
+                  "type": "number"
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-accounts-view_balance",
+        "description": "Endpoint to check the balance of a particular account",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "account_id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/banks/create": {
+      "post": {
+        "summary": "",
+        "operationId": "post-banks-create",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "bank_id": {
+                  "type": "integer"
+                },
+                "bank_identifier": {
+                  "type": "string"
+                },
+                "bank_desc": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "bank_id": {
+                  "type": "string"
+                },
+                "bank_identifier": {
+                  "type": "string"
+                },
+                "bank_desc": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "description": "endpoint to create a bank",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "bank_identifier": {
+                  "type": "string"
+                },
+                "bank_desc": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/banks/delete": {
+      "delete": {
+        "summary": "",
+        "operationId": "delete-banks-delete",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "description": "end point to delete a bank",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "bank_id": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/currency/update": {
+      "put": {
+        "summary": "",
+        "operationId": "put-currency-update",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "currency_id": {
+                  "type": "string"
+                },
+                "currency_rate": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/transactions/create": {
+      "post": {
+        "summary": "",
+        "operationId": "post-transactions-create",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "transaction_id": {
+                  "type": "string"
+                },
+                "transaction_status": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "credit_account_id": {
+                  "type": "string"
+                },
+                "debit_account_id": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "currency_id": {
+                  "type": "string"
+                },
+                "transaction_amount": {
+                  "type": "string"
+                },
+                "transaction_type": {
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "credit_account_id",
+                "debit_account_id",
+                "user",
+                "currency_id",
+                "transaction_amount",
+                "transaction_type"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "/transactions/update": {
+      "put": {
+        "summary": "",
+        "operationId": "put-transactions-update",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        },
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "transaction_id": {
+                  "type": "string"
+                },
+                "transaction_amount": {
+                  "type": "string"
+                },
+                "origin_account_id": {
+                  "type": "string"
+                },
+                "destination_account_id": {
+                  "type": "string"
+                },
+                "transaction_type": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "transaction_id"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "/transactions/view": {
+      "get": {
+        "summary": "Your GET endpoint",
+        "tags": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "transaction_id": {
+                    "type": "string"
+                  },
+                  "transaction_date": {
+                    "type": "string"
+                  },
+                  "transaction_user": {
+                    "type": "string"
+                  },
+                  "transaction_amount": {
+                    "type": "number"
+                  },
+                  "transaction_type": {
+                    "type": "integer"
+                  },
+                  "origin_account_id": {
+                    "type": "string"
+                  },
+                  "destination_account_id": {
+                    "type": "string"
+                  },
+                  "currency_id": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "get-transactions-view",
+        "description": "Endpoint to view transactions",
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "transaction_id": {
+                  "type": "string"
+                },
+                "transaction_user": {
+                  "type": "string"
+                },
+                "origin_account_id": {
+                  "type": "string"
+                },
+                "destination_account_id": {
+                  "type": "string"
+                },
+                "transaction_start_date": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "transaction_user"
+              ]
+            }
+          }
+        ]
+      }
+    }
+  },
+  "definitions": {},
+  "basePath": "/banking-ledger",
+  "securityDefinitions": {
+    "API Key - 1": {
+      "name": "API Key",
+      "type": "apiKey",
+      "in": "query"
+    }
+  }
+}
